@@ -1,7 +1,7 @@
+
 {
   "name": "smart-home-server-adel",
   "version": "1.0.0",
-  "description": "Smart Home Adel API Server",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
