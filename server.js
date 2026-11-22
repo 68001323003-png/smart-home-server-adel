@@ -1,3 +1,4 @@
+
 const express = require("express");
 const cors = require("cors");
 
@@ -11,12 +12,12 @@ app.use(express.json());
 
 let ledState = "OFF";
 
-// ตรวจสอบว่าเซิร์ฟเวอร์ทำงานหรือไม่
+// ตรวจสอบ Server
 app.get("/", (req, res) => {
   res.send("Smart Home Adel Server is running!");
 });
 
-// ส่งสถานะ LED ให้ ESP32
+// ตรวจสอบสถานะไฟ
 app.get("/api/state", (req, res) => {
   res.json({
     led: ledState
@@ -25,7 +26,7 @@ app.get("/api/state", (req, res) => {
 
 // รับคำสั่งจากเว็บไซต์
 app.post("/api/light", (req, res) => {
-  const { state } = req.body;
+  const state = req.body.state;
 
   if (state !== "ON" && state !== "OFF") {
     return res.status(400).json({
@@ -34,6 +35,8 @@ app.post("/api/light", (req, res) => {
   }
 
   ledState = state;
+
+  console.log("Light state:", ledState);
 
   res.json({
     message: "Success",
@@ -44,5 +47,6 @@ app.post("/api/light", (req, res) => {
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, "0.0.0.0", () => {
-  console.log("Smart Home Adel Server is running on port " + PORT);
+  console.log("Smart Home Adel Server running on port " + PORT);
 });
+
